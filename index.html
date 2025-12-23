@@ -34,16 +34,48 @@
             <span class="logo-text">True Wage Calculator</span>
         </a>
         <span class="tag">Find your true hourly wage</span>
-      </div>
-      <nav class="nav">
+        </div>
+
+        <!-- Desktop nav -->
+        <nav class="nav nav-desktop" aria-label="Primary">
         <a href="/">Calculator</a>
         <a href="/true-hourly-wage.html">True Hourly Wage</a>
         <a href="/commute-cost.html">Commute Cost</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
-      </nav>
+        </nav>
+
+        <!-- Mobile menu button -->
+        <button class="nav-toggle" type="button"
+                aria-label="Open menu"
+                aria-controls="mobileMenu"
+                aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        </button>
+    </div>
+
+    <!-- Mobile dropdown menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="/">Calculator</a>
+        <a href="/true-hourly-wage.html">True Hourly Wage</a>
+        <a href="/commute-cost.html">Commute Cost</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
     </div>
   </header>
+
+
+  <!-- Mobile dropdown menu -->
+  <div class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+    <a href="/">Calculator</a>
+    <a href="/true-hourly-wage.html">True Hourly Wage</a>
+    <a href="/commute-cost.html">Commute Cost</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+  </div>
+
 
   <main class="container">
     <section class="hero">
@@ -264,7 +296,10 @@
 
   <footer class="footer">
     <div class="container footer-inner">
-      <div>© <span id="year"></span> TrueWageCalculator.com</div>
+      <div>
+        © <span id="year"></span>
+        <a href="/" class="footer-brand">TrueWageCalculator.com</a>
+      </div>
       <div class="footer-links">
         <a href="/">Calculator</a>
         <a href="/true-hourly-wage.html">True Hourly Wage</a>
@@ -275,8 +310,6 @@
       </div>
     </div>
   </footer>
-
-  <script src="app.js"></script>
 
   <!-- Structured Data -->
   <script type="application/ld+json">
@@ -290,5 +323,6 @@
     "description": "Calculate your true hourly wage after commute time, unpaid overtime, unpaid breaks, and PTO."
   }
   </script>
-</body>
+<script src="app.js" defer></script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9b2b2f410f81a945',t:'MTc2NjUyNzc4MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

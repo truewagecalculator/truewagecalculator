@@ -11,26 +11,47 @@
   <link rel="canonical" href="https://truewagecalculator.com/commute-cost.html" />
   <link rel="stylesheet" href="styles.css" />
 </head>
-<body>
 
+<body>
 <header class="site-header">
-  <div class="container">
-    <div class="brand">
-      <a class="logo" href="/">
+    <div class="container">
+      <div class="brand">
+        <a class="logo" href="/">
             <img src="/assets/logo.svg" alt="True Wage Calculator logo" class="logo-img">
             <span class="logo-text">True Wage Calculator</span>
         </a>
-      <span class="tag">Find your real hourly pay</span>
-    </div>
-    <nav class="nav">
-      <a href="/">Calculator</a>
+        <span class="tag">Find your true hourly wage</span>
+        </div>
+
+        <!-- Desktop nav -->
+        <nav class="nav nav-desktop" aria-label="Primary">
+        <a href="/">Calculator</a>
         <a href="/true-hourly-wage.html">True Hourly Wage</a>
         <a href="/commute-cost.html">Commute Cost</a>
         <a href="/about.html">About</a>
         <a href="/contact.html">Contact</a>
-    </nav>
-  </div>
-</header>
+        </nav>
+
+        <!-- Mobile menu button -->
+        <button class="nav-toggle" type="button"
+                aria-label="Open menu"
+                aria-controls="mobileMenu"
+                aria-expanded="false">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        </button>
+    </div>
+
+    <!-- Mobile dropdown menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-label="Mobile navigation">
+        <a href="/">Calculator</a>
+        <a href="/true-hourly-wage.html">True Hourly Wage</a>
+        <a href="/commute-cost.html">Commute Cost</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+    </div>
+  </header>
 
 <main class="container">
 
@@ -129,7 +150,10 @@ Workdays Per Week × Working Weeks Per Year
 
 <footer class="footer">
   <div class="container footer-inner">
-    <div>© <span id="year"></span> TrueWageCalculator.com</div>
+    <div>
+        © <span id="year"></span>
+        <a href="/" class="footer-brand">TrueWageCalculator.com</a>
+    </div>
     <div class="footer-links">
       <a href="/">Calculator</a>
       <a href="/true-hourly-wage.html">True Hourly Wage</a>
@@ -144,6 +168,6 @@ Workdays Per Week × Working Weeks Per Year
 <script>
   document.getElementById("year").textContent = new Date().getFullYear();
 </script>
-
+<script src="app.js" defer></script>
 </body>
 </html>
