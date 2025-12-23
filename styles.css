@@ -85,6 +85,36 @@ hr.sep{border:0; height:1px; background: rgba(255,255,255,.08); margin: 16px 0}
   background: rgba(124,92,255,.16);
 }
 
+.role-tabs{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+}
+
+.role-tab{
+  padding:10px 14px;
+  border-radius:999px;
+  border:1px solid rgba(255,255,255,.15);
+  background: rgba(0,0,0,.25);
+  color: var(--text);
+  font-weight:600;
+  cursor:pointer;
+  transition: all .15s ease;
+}
+
+.role-tab:hover{
+  border-color: rgba(124,92,255,.6);
+}
+
+.role-tab.active{
+  background: linear-gradient(135deg, rgba(124,92,255,.9), rgba(92,60,255,.9));
+  border-color: transparent;
+}
+
+.role-tab:focus{
+  outline:none;
+}
+
 .form{display:flex; flex-direction:column; gap:12px}
 .row{display:flex; flex-direction:column; gap:6px}
 label{font-size:13px; color: var(--muted)}

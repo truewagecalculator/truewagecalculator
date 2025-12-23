@@ -73,6 +73,22 @@
           </div>
 
           <div class="row">
+            <label>Work role (optional preset)</label>
+
+            <div class="role-tabs" role="tablist" aria-label="Work role presets">
+                <button class="role-tab active" data-role="custom" aria-selected="true">Custom</button>
+                <button class="role-tab" data-role="hourly">Hourly</button>
+                <button class="role-tab" data-role="supervisor">Supervisor</button>
+                <button class="role-tab" data-role="manager">Manager</button>
+                <button class="role-tab" data-role="director">Director</button>
+            </div>
+
+            <p class="hint">
+                Presets only pre-fill common patterns. You can change any value.
+            </p>
+          </div>
+
+          <div class="row">
             <label for="scheduledHours">Scheduled hours per week</label>
             <input id="scheduledHours" inputmode="decimal" placeholder="40" />
           </div>
