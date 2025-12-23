@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>True Wage Calculator — Your Real Hourly Pay After Commute & Unpaid Time</title>
+  <meta name="description" content="Calculate your true hourly wage by factoring commute time, unpaid overtime, unpaid breaks, and PTO. See your real pay per hour with a full breakdown." />
+  <link rel="canonical" href="https://truewagecalculator.com/" />
+  <meta name="robots" content="index,follow" />
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="True Wage Calculator — Your Real Hourly Pay" />
+  <meta property="og:description" content="Reveal your true hourly wage after commute, unpaid overtime, unpaid breaks, and PTO." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://truewagecalculator.com/" />
+
+  <!-- Paste AdSense verification/ad script here AFTER approval -->
+  <!-- Example:
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXX"
+    crossorigin="anonymous"></script>
+  -->
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <a class="logo" href="/">True Wage Calculator</a>
+        <span class="tag">Find your real hourly pay</span>
+      </div>
+      <nav class="nav">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="hero">
+      <h1>True Wage Calculator</h1>
+      <p class="subhead">
+        Your salary can look great on paper — until you include <strong>commute time</strong>, <strong>unpaid overtime</strong>,
+        and other unpaid time. This tool calculates your <strong>true hourly wage</strong> with a clear breakdown.
+      </p>
+    </section>
+
+    <section class="card grid">
+      <div class="panel">
+        <h2>Enter your details</h2>
+
+        <div class="tabs" role="tablist" aria-label="Pay type">
+          <button class="tab active" type="button" data-pay="salary" aria-selected="true">Salary</button>
+          <button class="tab" type="button" data-pay="hourly" aria-selected="false">Hourly</button>
+        </div>
+
+        <div class="form">
+          <div class="row" data-salary-row>
+            <label for="annualSalary">Annual salary (before tax)</label>
+            <div class="field">
+              <span class="prefix">$</span>
+              <input id="annualSalary" inputmode="decimal" placeholder="80000" />
+            </div>
+          </div>
+
+          <div class="row hidden" data-hourly-row>
+            <label for="hourlyRate">Hourly rate (before tax)</label>
+            <div class="field">
+              <span class="prefix">$</span>
+              <input id="hourlyRate" inputmode="decimal" placeholder="32.50" />
+            </div>
+          </div>
+
+          <div class="row">
+            <label for="scheduledHours">Scheduled hours per week</label>
+            <input id="scheduledHours" inputmode="decimal" placeholder="40" />
+          </div>
+
+          <div class="row">
+            <label for="unpaidOvertime">Unpaid overtime hours per week</label>
+            <input id="unpaidOvertime" inputmode="decimal" placeholder="5" />
+          </div>
+
+          <div class="row">
+            <label for="unpaidBreakMins">Unpaid break minutes per workday</label>
+            <input id="unpaidBreakMins" inputmode="decimal" placeholder="30" />
+          </div>
+
+          <div class="row">
+            <label for="commuteMinsOneWay">Commute minutes (one-way)</label>
+            <input id="commuteMinsOneWay" inputmode="decimal" placeholder="25" />
+          </div>
+
+          <div class="row">
+            <label for="daysPerWeek">Days commuting per week</label>
+            <input id="daysPerWeek" inputmode="decimal" placeholder="5" />
+          </div>
+
+          <div class="row">
+            <label for="ptoWeeks">Paid weeks off per year (PTO + holidays)</label>
+            <input id="ptoWeeks" inputmode="decimal" placeholder="3" />
+          </div>
+
+          <details class="advanced">
+            <summary>Advanced options (optional)</summary>
+
+            <div class="row">
+              <label for="prepMinsDaily">Unpaid prep time per workday (getting ready, packing, etc.)</label>
+              <input id="prepMinsDaily" inputmode="decimal" placeholder="20" />
+            </div>
+
+            <div class="row">
+              <label for="annualBonus">Annual bonus (optional)</label>
+              <div class="field">
+                <span class="prefix">$</span>
+                <input id="annualBonus" inputmode="decimal" placeholder="0" />
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="benefitsValue">Estimated annual benefits value (employer-paid benefits)</label>
+              <div class="field">
+                <span class="prefix">$</span>
+                <input id="benefitsValue" inputmode="decimal" placeholder="0" />
+              </div>
+              <p class="hint">Optional: only include benefits you want counted as “pay value.”</p>
+            </div>
+
+            <div class="row">
+              <label for="stressTax">Stress / drain factor (subjective)</label>
+              <input id="stressTax" type="range" min="0" max="20" step="1" value="0" />
+              <div class="range-row">
+                <span>0%</span>
+                <span id="stressTaxLabel">0%</span>
+                <span>20%</span>
+              </div>
+              <p class="hint">Applies a “stress tax” reduction to your effective wage. This is subjective — use if helpful.</p>
+            </div>
+          </details>
+
+          <div class="actions">
+            <button id="calcBtn" class="btn primary" type="button">Calculate true wage</button>
+            <button id="resetBtn" class="btn" type="button">Reset</button>
+          </div>
+
+          <p class="fineprint">
+            Educational estimate only. No data is stored or sent anywhere — calculations run in your browser.
+          </p>
+        </div>
+      </div>
+
+      <div class="panel">
+        <h2>Your results</h2>
+
+        <div class="result">
+          <div class="big">
+            <div class="label">True hourly wage</div>
+            <div class="value" id="trueHourly">$—</div>
+            <div class="sub" id="compareText">Enter details and calculate.</div>
+          </div>
+
+          <div class="breakdown">
+            <div class="bd-row">
+              <span>Annual total pay counted</span>
+              <strong id="annualPay">$—</strong>
+            </div>
+            <div class="bd-row">
+              <span>Working weeks per year</span>
+              <strong id="workingWeeks">—</strong>
+            </div>
+            <div class="bd-row">
+              <span>Scheduled hours / year</span>
+              <strong id="scheduledHoursYear">—</strong>
+            </div>
+            <div class="bd-row">
+              <span>Unpaid overtime hours / year</span>
+              <strong id="overtimeHoursYear">—</strong>
+            </div>
+            <div class="bd-row">
+              <span>Commute hours / year</span>
+              <strong id="commuteHoursYear">—</strong>
+            </div>
+            <div class="bd-row">
+              <span>Unpaid breaks hours / year</span>
+              <strong id="breakHoursYear">—</strong>
+            </div>
+            <div class="bd-row">
+              <span>Prep time hours / year</span>
+              <strong id="prepHoursYear">—</strong>
+            </div>
+            <div class="bd-row total">
+              <span><strong>Total time cost (hours / year)</strong></span>
+              <strong id="totalHoursYear">—</strong>
+            </div>
+          </div>
+
+          <div class="share">
+            <button id="copyBtn" class="btn" type="button">Copy shareable summary</button>
+            <span id="copyStatus" class="status" aria-live="polite"></span>
+          </div>
+
+          <hr class="sep" />
+
+          <section class="method">
+            <h3>Methodology (what “true wage” means here)</h3>
+            <ul>
+              <li>We start with your pay (salary or hourly), plus optional bonus and benefits.</li>
+              <li>We compute how many weeks you actually work: <strong>52 − paid weeks off</strong>.</li>
+              <li>We count time you “pay” with: commute, unpaid overtime, unpaid breaks, and optional prep time.</li>
+              <li>Optional: apply a subjective “stress tax” that reduces effective wage by 0–20%.</li>
+            </ul>
+          </section>
+
+          <!-- After AdSense approval, place 1 responsive ad unit below this point (not near inputs). -->
+        </div>
+      </div>
+    </section>
+
+    <section class="content card">
+      <h2>Why this matters</h2>
+      <p>
+        Two jobs with the same salary can pay very different “real” wages once you factor in commute time, unpaid
+        overtime, and other unpaid time sinks. This calculator helps you compare offers or rethink your work setup
+        using a simple, transparent model.
+      </p>
+      <p>
+        Want more context? Read <a href="/about.html">About</a> for examples and how to interpret the results.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> TrueWageCalculator.com</div>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "True Wage Calculator",
+    "url": "https://truewagecalculator.com/",
+    "applicationCategory": "FinanceApplication",
+    "operatingSystem": "All",
+    "description": "Calculate your true hourly wage after commute time, unpaid overtime, unpaid breaks, and PTO."
+  }
+  </script>
+</body>
+</html>

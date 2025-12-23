@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>About — True Wage Calculator</title>
+  <meta name="description" content="What True Wage Calculator is, how it works, and how to interpret your true hourly wage." />
+  <link rel="canonical" href="https://truewagecalculator.com/about.html" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <div class="brand">
+        <a class="logo" href="/">TrueWageCalculator</a>
+        <span class="tag">Find your real hourly pay</span>
+      </div>
+      <nav class="nav">
+        <a href="/about.html">About</a>
+        <a href="/privacy.html">Privacy</a>
+        <a href="/contact.html">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h1>About</h1>
+      <p class="subhead">
+        TrueWageCalculator.com estimates your <strong>true hourly wage</strong> by dividing pay by the total time cost of work.
+        For many people, commute time and unpaid work are the hidden pay cut.
+      </p>
+
+      <h2>What we count</h2>
+      <ul style="color:var(--muted);">
+        <li><strong>Pay:</strong> salary or hourly pay (plus optional bonus + benefits you choose to include).</li>
+        <li><strong>Time cost:</strong> scheduled hours, unpaid overtime, commute time, unpaid breaks, optional prep time.</li>
+        <li><strong>Weeks worked:</strong> 52 minus paid weeks off (PTO + holidays).</li>
+      </ul>
+
+      <h2>How to use the result</h2>
+      <ul style="color:var(--muted);">
+        <li>Compare two jobs: the higher salary isn’t always the higher true wage.</li>
+        <li>Evaluate commute changes: remote or closer work can be a huge “raise.”</li>
+        <li>Spot burnout risk: if unpaid hours are high, your real wage drops fast.</li>
+      </ul>
+
+      <p class="fineprint">
+        Educational estimate only. Results depend on your inputs and assumptions.
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> TrueWageCalculator.com</div>
+      <div class="footer-links">
+        <a href="/privacy.html">Privacy</a>
+        <a href="/about.html">About</a>
+        <a href="/contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById("year").textContent = new Date().getFullYear();</script>
+</body>
+</html>
