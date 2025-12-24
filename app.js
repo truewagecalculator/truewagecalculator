@@ -497,6 +497,9 @@ Includes commute + unpaid overtime + unpaid breaks + prep (if entered).`;
 
     renderEmpty("Enter details and calculate.");
   }
+
+  initCalculatorIfPresent();
+
 // ===============================
 // Mobile Dropdown Menu
 // ===============================
