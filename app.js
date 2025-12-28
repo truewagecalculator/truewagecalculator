@@ -13,12 +13,20 @@
 /* ===============================
    Utilities (scoped)
    =============================== */
+
+// ===== Google Analytics Safe Helper =====
+function trackEvent(eventName, params = {}) {
+  if (typeof window !== "undefined" && typeof window.gtag === "function") {
+    window.gtag("event", eventName, params);
+  }
+}
+
 (() => {
   const $ = (id) => document.getElementById(id);
 
   const state = {
-    payMode: "salary",     // "salary" | "hourly"
-    rolePreset: "custom",  // "custom" | "hourly" | "supervisor" | "manager" | "director"
+    payMode: "salary", // "salary" | "hourly"
+    rolePreset: "custom", // "custom" | "hourly" | "supervisor" | "manager" | "director"
   };
 
   function toNum(v) {
@@ -79,9 +87,8 @@
   }
 
   if (document.getElementById("year")) {
-  document.getElementById("year").textContent = new Date().getFullYear();
-}
-
+    document.getElementById("year").textContent = new Date().getFullYear();
+  }
 
   /* ===============================
      Calculator: touched tracking
@@ -252,12 +259,19 @@
     // Hours/year
     const scheduledHoursYear = Math.max(0, scheduledHoursWk) * workingWeeks;
     const overtimeHoursYear = Math.max(0, unpaidOTWk) * workingWeeks;
-    const breakHoursYear = (Math.max(0, unpaidBreakMins) / 60) * workingDaysPerYear;
-    const commuteHoursYear = ((Math.max(0, commuteMinsOneWay) * 2) / 60) * workingDaysPerYear;
-    const prepHoursYear = (Math.max(0, prepMinsDaily) / 60) * workingDaysPerYear;
+    const breakHoursYear =
+      (Math.max(0, unpaidBreakMins) / 60) * workingDaysPerYear;
+    const commuteHoursYear =
+      ((Math.max(0, commuteMinsOneWay) * 2) / 60) * workingDaysPerYear;
+    const prepHoursYear =
+      (Math.max(0, prepMinsDaily) / 60) * workingDaysPerYear;
 
     const totalHoursYear =
-      scheduledHoursYear + overtimeHoursYear + breakHoursYear + commuteHoursYear + prepHoursYear;
+      scheduledHoursYear +
+      overtimeHoursYear +
+      breakHoursYear +
+      commuteHoursYear +
+      prepHoursYear;
 
     if (annualPayCounted <= 0 || totalHoursYear <= 0) {
       renderEmpty("Please enter your pay and time details, then calculate.");
@@ -328,7 +342,8 @@
 
     // Insights
     const commuteHours = r.commuteHoursYear;
-    const unpaidHours = r.overtimeHoursYear + r.breakHoursYear + r.prepHoursYear;
+    const unpaidHours =
+      r.overtimeHoursYear + r.breakHoursYear + r.prepHoursYear;
 
     const commuteWeeks = commuteHours / 40;
     const unpaidWeeks = unpaidHours / 40;
@@ -340,14 +355,18 @@
 
     if ($("insCommute")) {
       $("insCommute").textContent = fmtHours(commuteHours);
-      $("insCommuteSub").textContent =
-        `${fmtNum(commuteWeeks, 1)} workweeks (~${fmtMoney(commuteTimeValue)} of time at nominal rate)`;
+      $("insCommuteSub").textContent = `${fmtNum(
+        commuteWeeks,
+        1
+      )} workweeks (~${fmtMoney(commuteTimeValue)} of time at nominal rate)`;
     }
 
     if ($("insUnpaid")) {
       $("insUnpaid").textContent = fmtHours(unpaidHours);
-      $("insUnpaidSub").textContent =
-        `${fmtNum(unpaidWeeks, 1)} workweeks (~${fmtMoney(unpaidTimeValue)} of time at nominal rate)`;
+      $("insUnpaidSub").textContent = `${fmtNum(
+        unpaidWeeks,
+        1
+      )} workweeks (~${fmtMoney(unpaidTimeValue)} of time at nominal rate)`;
     }
 
     if ($("insDrop")) {
@@ -356,8 +375,10 @@
         r.stressTaxPct > 0
           ? ` With strain adjustment, the displayed true wage is further reduced by ${r.stressTaxPct}%.`
           : ` Add a work strain adjustment if you want a subjective quality-of-life reduction.`;
-      $("insDropSub").textContent =
-        `Your true wage (time-based) is ~${fmtNum(dropPct, 1)}% below nominal.${strainExtra}`;
+      $("insDropSub").textContent = `Your true wage (time-based) is ~${fmtNum(
+        dropPct,
+        1
+      )}% below nominal.${strainExtra}`;
     }
   }
 
@@ -380,8 +401,7 @@
     const role = state.rolePreset || "custom";
     const mode = state.payMode;
 
-    const text =
-`True Wage Calculator (truewagecalculator.com)
+    const text = `True Wage Calculator (truewagecalculator.com)
 Mode: ${mode}
 Role preset: ${role}
 True hourly wage: ${trueHourly}
@@ -471,9 +491,27 @@ Includes commute + unpaid overtime + unpaid breaks + prep (if entered).`;
       btn.addEventListener("click", () => setRolePreset(btn.dataset.role));
     });
 
-    $("calcBtn")?.addEventListener("click", calculate);
-    $("resetBtn")?.addEventListener("click", resetAll);
-    $("copyBtn")?.addEventListener("click", copySummary);
+    $("calcBtn")?.addEventListener("click", () => {
+      trackEvent("calc_submit", {
+        pay_mode: state.payMode,
+        role: state.rolePreset
+      });
+      calculate();
+    });
+    $("resetBtn")?.addEventListener("click", () => {
+      trackEvent("calc_reset", {
+        pay_mode: state.payMode,
+        role: state.rolePreset
+      });
+      resetAll();
+    });
+    $("copyBtn")?.addEventListener("click", () => {
+      trackEvent("copy_summary", {
+        pay_mode: state.payMode,
+        role: state.rolePreset
+      });
+      copySummary();
+    });
 
     wireTouchedTracking();
 
@@ -500,44 +538,46 @@ Includes commute + unpaid overtime + unpaid breaks + prep (if entered).`;
 
   initCalculatorIfPresent();
 
-// ===============================
-// Mobile Dropdown Menu
-// ===============================
-    (function setupMobileDropdown(){
-      const header = document.querySelector(".site-header");
-      const btn = document.querySelector(".nav-toggle");
-      const menu = document.getElementById("mobileMenu");
+  // ===============================
+  // Mobile Dropdown Menu
+  // ===============================
+  (function setupMobileDropdown() {
+    const header = document.querySelector(".site-header");
+    const btn = document.querySelector(".nav-toggle");
+    const menu = document.getElementById("mobileMenu");
 
-      if (!header || !btn || !menu) return;
+    if (!header || !btn || !menu) return;
 
-      const open = () => {
-        header.classList.add("nav-open");
-        btn.setAttribute("aria-expanded", "true");
-        menu.scrollTop = 0;
-      };
+    const open = () => {
+      header.classList.add("nav-open");
+      btn.setAttribute("aria-expanded", "true");
+      menu.scrollTop = 0;
+    };
 
-      const close = () => {
-        header.classList.remove("nav-open");
-        btn.setAttribute("aria-expanded", "false");
-      };
+    const close = () => {
+      header.classList.remove("nav-open");
+      btn.setAttribute("aria-expanded", "false");
+    };
 
-      btn.addEventListener("click", (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-        header.classList.contains("nav-open") ? close() : open();
-      });
+    btn.addEventListener("click", (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      header.classList.contains("nav-open") ? close() : open();
+    });
 
-      // Close after clicking a link
-      menu.querySelectorAll("a").forEach(a => a.addEventListener("click", close));
+    // Close after clicking a link
+    menu
+      .querySelectorAll("a")
+      .forEach((a) => a.addEventListener("click", close));
 
-      // Close if you click outside
-      document.addEventListener("click", (e) => {
-        if (!header.contains(e.target)) close();
-      });
+    // Close if you click outside
+    document.addEventListener("click", (e) => {
+      if (!header.contains(e.target)) close();
+    });
 
-      // Close on ESC
-      document.addEventListener("keydown", (e) => {
-        if (e.key === "Escape") close();
-      });
+    // Close on ESC
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
   })();
 })();
